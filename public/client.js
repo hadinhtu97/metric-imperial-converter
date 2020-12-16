@@ -1,9 +1,15 @@
-let form = document.getElementById('form');
-let input = document.getElementById('input');
-let output = document.getElementById('output');
-let string = document.getElementById('string');
+$(document).ready(function () {
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    
+    $('#form').submit((event) => {
+        event.preventDefault();
+        $.ajax({
+            url: '/api/convert',
+            method: 'GET',
+            data: $('#form').serialize(),
+            success: data => {
+                $('#string').text(data.string || data);
+                $('#output').text(JSON.stringify(data))
+            }
+        })
+    })
 })
