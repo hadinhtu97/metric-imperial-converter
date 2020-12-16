@@ -6,7 +6,6 @@ module.exports = app => {
 
     app.route('/api/convert').get((req, res) => {
         let input = req.query.input;
-
         if (input === undefined) {
             res.send("Can't not find 'input' value!");
         } else {
