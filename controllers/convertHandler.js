@@ -1,4 +1,4 @@
-function ConvertHandle() {
+function ConvertHandler() {
     const listConvert = [
         ['gal', 'L', 3.78541],
         ['lbs', 'kg', 0.453592],
@@ -35,4 +35,4 @@ function ConvertHandle() {
     }
 }
 
-module.exports = ConvertHandle;
+module.exports = ConvertHandler;
