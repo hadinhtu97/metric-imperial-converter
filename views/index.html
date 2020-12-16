@@ -11,7 +11,7 @@
 <body>
     <h1>Metric Imperial Converter</h1>
     <hr>
-    <div id="code">
+    <div>
         <code>
             /api/convert?input=4gal <br>
             /api/convert?input=1/2km <br>
@@ -24,6 +24,15 @@
         </code>
     </div>
     <hr>
+    <div>
+        <form action="" method="POST" id="form">
+            <input type="text" id="input" name="input" placeholder="1kg">
+            <input type="submit" value="Convert">
+        </form>
+        <p id="string"></p>
+        <code id="output"></code>
+    </div>
+    <script src="client.js"></script>
 </body>
 
 </html>

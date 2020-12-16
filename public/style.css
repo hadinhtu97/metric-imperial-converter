@@ -14,7 +14,7 @@ hr {
     width: 70%;
 }
 
-#code {
+div {
     margin: 30px 0;
     font-size: 15px;
 }
@@ -22,4 +22,18 @@ hr {
 code {
     font-family: monospace;
     background-color: #ddd;
+}
+
+input {
+    outline: none;
+    border: 1px solid #5e0080;
+}
+
+input[type=submit] {
+    background-color: #fff;
+    color: #dd4814;
+}
+
+input[type=submit]:hover {
+    color: cyan;
 }
