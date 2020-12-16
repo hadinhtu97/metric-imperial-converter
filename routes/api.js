@@ -17,13 +17,12 @@ module.exports = app => {
                     res.send('invalid unit')
                 }
             } else {
-                let initNum = input.slice(0, firstLetterOfUnit.index);
-                let initUnit = input.slice(firstLetterOfUnit.index);
-                if (initNum == '') initNum = 1;
+                let initNum = convertHandler.getInitNum(input);
+                let initUnit = convertHandler.getInitUnit(input);
 
-                if (/\/\//.test(initNum) && !convertHandler.isUnit(initUnit)) {
+                if (convertHandler.checkMultipleFractions(initNum) && !convertHandler.isUnit(initUnit)) {
                     res.send('invalid number and unit')
-                } else if (/\/\//.test(initNum)) {
+                } else if (convertHandler.checkMultipleFractions(initNum)) {
                     res.send('invalid number')
                 } else {
                     initNum = eval(initNum);
@@ -34,19 +33,13 @@ module.exports = app => {
                     } else if (!convertHandler.isUnit(initUnit)) {
                         res.send('invalid unit')
                     } else {
-                        initUnit = initUnit.toLowerCase();
-                        if (initUnit == 'l') initUnit = 'L';
-
-                        let returnNum = parseFloat(convertHandler.convert(initNum, initUnit)[0].toFixed(5));
-                        let returnUnit = convertHandler.convert(initNum, initUnit)[1];
-                        let string = initNum + ' ' + convertHandler.transferUnitToName(initUnit) + ' converts to ' + returnNum + ' ' + convertHandler.transferUnitToName(returnUnit);
-
+                        initUnit = convertHandler.renameUnit(initUnit);
                         res.json({
                             initNum: initNum,
                             initUnit: initUnit,
-                            returnNum: returnNum,
-                            returnUnit: returnUnit,
-                            string: string
+                            returnNum: convertHandler.getReturnNum(initNum, initUnit),
+                            returnUnit: convertHandler.getReturnUnit(initNum, initUnit),
+                            string: convertHandler.getReturnString(initNum, initUnit)
                         })
                     }
                 }

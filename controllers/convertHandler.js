@@ -9,7 +9,17 @@ function ConvertHandler() {
 
     this.getFirstLetterOfUnit = (input) => {
         let regex = /[^\d.\W]/;
-        return input.match(regex)
+        return input.match(regex);
+    }
+
+    this.getInitNum = (input) => {
+        let firstLetterOfUnit = this.getFirstLetterOfUnit(input);
+        return input.slice(0, firstLetterOfUnit.index) == '' ? 1 : input.slice(0, firstLetterOfUnit.index);
+    }
+
+    this.getInitUnit = (input) => {
+        let firstLetterOfUnit = this.getFirstLetterOfUnit(input);
+        return input.slice(firstLetterOfUnit.index);
     }
 
     this.isUnit = (unit) => {
@@ -21,11 +31,37 @@ function ConvertHandler() {
         }
         return false;
     }
-    this.convert = (num, unit) => {
+
+    this.checkMultipleFractions = (initInput) => {
+        return /\/\//g.test(initInput);
+    }
+
+    this.renameUnit = (unit) => {
+        let regex = new RegExp(unit, 'i');
+        for (let i = 0; i < listUnit.length; i++) {
+            if (regex.test(listUnit[i])) {
+                return listUnit[i];
+            }
+        }
+    }
+
+    this.getReturnNum = (initNum, initUnit) => {
+        return parseFloat(this.convert(initNum, initUnit)[0].toFixed(5));
+    }
+
+    this.getReturnUnit = (initNum, initUnit) => {
+        return this.convert(initNum, initUnit)[1];
+    }
+
+    this.getReturnString = (initNum, initUnit) => {
+        return initNum + ' ' + this.transferUnitToName(initUnit) + ' converts to ' + this.getReturnNum(initNum, initUnit) + ' ' + this.transferUnitToName(this.getReturnUnit(initNum,initUnit))
+    }
+
+    this.convert = (initNum, initUnit) => {
         for (let i = 0; i < listConvert.length; i++) {
-            if (listConvert[i].indexOf(unit) != -1) {
-                if (listConvert[i].indexOf(unit) == 0) return [num * listConvert[i][2], listConvert[i][1]];
-                if (listConvert[i].indexOf(unit) == 1) return [num / listConvert[i][2], listConvert[i][0]];
+            if (listConvert[i].indexOf(initUnit) != -1) {
+                if (listConvert[i].indexOf(initUnit) == 0) return [initNum * listConvert[i][2], listConvert[i][1]];
+                if (listConvert[i].indexOf(initUnit) == 1) return [initNum / listConvert[i][2], listConvert[i][0]];
             }
         }
     }
