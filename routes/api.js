@@ -6,7 +6,7 @@ module.exports = app => {
             ['mi', 'km', 1.60934],
         ];
         const listUnit = ['gal', 'L', 'lbs', 'kg', 'mi', 'km'];
-        const listUnitName = ['gallons', 'liters', 'pounds', 'kilogram', 'mile', 'kilometers']
+        const listUnitName = ['gallons', 'liters', 'pounds', 'kilogram', 'miles', 'kilometers']
         const isUnit = (unit) => {
             let regex = new RegExp(unit, 'i');
             for (let i = 0; i < listUnit.length; i++) {
