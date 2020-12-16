@@ -37,12 +37,7 @@ function ConvertHandler() {
     }
 
     this.renameUnit = (unit) => {
-        let regex = new RegExp(unit, 'i');
-        for (let i = 0; i < listUnit.length; i++) {
-            if (regex.test(listUnit[i])) {
-                return listUnit[i];
-            }
-        }
+        return unit.toLowerCase() == 'l' ? 'L' : unit.toLowerCase();
     }
 
     this.getReturnNum = (initNum, initUnit) => {
@@ -54,7 +49,7 @@ function ConvertHandler() {
     }
 
     this.getReturnString = (initNum, initUnit) => {
-        return initNum + ' ' + this.transferUnitToName(initUnit) + ' converts to ' + this.getReturnNum(initNum, initUnit) + ' ' + this.transferUnitToName(this.getReturnUnit(initNum,initUnit))
+        return initNum + ' ' + this.transferUnitToName(initUnit) + ' converts to ' + this.getReturnNum(initNum, initUnit) + ' ' + this.transferUnitToName(this.getReturnUnit(initNum, initUnit))
     }
 
     this.convert = (initNum, initUnit) => {
