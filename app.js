@@ -15,8 +15,9 @@ const listConvert = [
     ['gal', 'L', 3.78541],
     ['lbs', 'kg', 0.453592],
     ['mi', 'km', 1.60934],
-]
-const listUnit = ['gal', 'L', 'lbs', 'kg', 'mi', 'km']
+];
+const listUnit = ['gal', 'L', 'lbs', 'kg', 'mi', 'km'];
+const listUnitName = ['gallons', 'liters', 'pounds', 'kilogram', 'mile', 'kilometers']
 
 const isUnit = (unit) => {
     let regex = new RegExp(unit, 'i');
@@ -56,25 +57,31 @@ app.route('/api/convert').get((req, res) => {
             let num = input.slice(0, firstLetterOfUnit.index);
             let unit = input.slice(firstLetterOfUnit.index);
             if (num == '') num = 1;
-            num = eval(num);
-            if (!isUnit(unit) && isNaN(num)) {
+            if (/\/\//.test(num) && !isUnit(unit)) {
                 res.send('invalid number and unit')
-            } else if (isNaN(num)) {
+            } else if (/\/\//.test(num)) {
                 res.send('invalid number')
-            } else if (!isUnit(unit)) {
-                res.send('invalid unit')
             } else {
-                unit = unit.toLowerCase();
-                if (unit == 'l') unit = 'L';
-                let returnNum = parseFloat(convert(num, unit)[0].toFixed(5));
-                let returnUnit = convert(num, unit)[1];
-                res.json({
-                    initNum: num,
-                    initUnit: unit,
-                    returnNum: returnNum,
-                    returnUnit: returnUnit,
-                    string: num + ' ' + unit + ' converts to ' + returnNum + ' ' + returnUnit
-                })
+                num = eval(num);
+                if (!isUnit(unit) && isNaN(num)) {
+                    res.send('invalid number and unit')
+                } else if (isNaN(num)) {
+                    res.send('invalid number')
+                } else if (!isUnit(unit)) {
+                    res.send('invalid unit')
+                } else {
+                    unit = unit.toLowerCase();
+                    if (unit == 'l') unit = 'L';
+                    let returnNum = parseFloat(convert(num, unit)[0].toFixed(5));
+                    let returnUnit = convert(num, unit)[1];
+                    res.json({
+                        initNum: num,
+                        initUnit: unit,
+                        returnNum: returnNum,
+                        returnUnit: returnUnit,
+                        string: num + ' ' + listUnitName[listUnit.indexOf(unit)] + ' converts to ' + returnNum + ' ' + listUnitName[listUnit.indexOf(returnUnit)]
+                    })
+                }
             }
         }
     }
