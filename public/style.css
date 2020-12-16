@@ -13,3 +13,13 @@ h1 {
 hr {
     width: 70%;
 }
+
+#code {
+    margin: 30px 0;
+    font-size: 15px;
+}
+
+code {
+    font-family: monospace;
+    background-color: #ddd;
+}
