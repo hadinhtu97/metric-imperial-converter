@@ -5,7 +5,7 @@ function ConvertHandle() {
         ['mi', 'km', 1.60934],
     ];
     const listUnit = ['gal', 'L', 'lbs', 'kg', 'mi', 'km'];
-    const listUnitName = ['gallons', 'liters', 'pounds', 'kilogram', 'mile', 'kilometers']
+    const listUnitName = ['gallons', 'liters', 'pounds', 'kilogram', 'miles', 'kilometers']
 
     this.getFirstLetterOfUnit = (input) => {
         let regex = /[^\d.\W]/;
