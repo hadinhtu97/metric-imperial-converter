@@ -1,7 +1,8 @@
-const assert = require('chai').assert;
-const ConvertHandler = require('../controllers/convertHandler');
+const chai = require('chai');
+let assert = chai.assert;
+const ConvertHandler = require('../controllers/convertHandler.js');
 
-const convertHandler = new ConvertHandler();
+let convertHandler = new ConvertHandler();
 
 suite('Unit Tests', function () {
 
@@ -50,7 +51,7 @@ suite('Unit Tests', function () {
         test('For Each Valid Unit Inputs', function (done) {
             let input = ['gal', 'l', 'mi', 'km', 'lbs', 'kg', 'GAL', 'L', 'MI', 'KM', 'LBS', 'KG'];
             input.forEach(function (ele) {
-                assert.equal(convertHandler.getInitUnit(input), true);
+                assert.isString(convertHandler.getInitUnit(ele));
             });
             done();
         });
@@ -69,7 +70,7 @@ suite('Unit Tests', function () {
             let input = ['gal', 'l', 'mi', 'km', 'lbs', 'kg'];
             let expect = ['L', 'gal', 'km', 'mi', 'kg', 'lbs'];
             input.forEach(function (ele, i) {
-                assert.equal(convertHandler.getReturnUnit(ele), expect[i]);
+                assert.equal(convertHandler.getReturnUnit(1, ele), expect[i]);
             });
             done();
         });
