@@ -7,37 +7,25 @@ function ConvertHandler() {
     const listUnit = ['gal', 'L', 'lbs', 'kg', 'mi', 'km'];
     const listUnitName = ['gallons', 'liters', 'pounds', 'kilogram', 'miles', 'kilometers']
 
-    this.getFirstLetterOfUnit = (input) => {
-        let regex = /[^\d.\W]/;
-        return input.match(regex);
-    }
-
     this.getInitNum = (input) => {
         let firstLetterOfUnit = this.getFirstLetterOfUnit(input);
-        return input.slice(0, firstLetterOfUnit.index) == '' ? 1 : input.slice(0, firstLetterOfUnit.index);
+        if (firstLetterOfUnit == false) {
+            if (isNaN(input)) return false;
+        }
+        initNum = input.slice(0, firstLetterOfUnit.index) == '' ? 1 : input.slice(0, firstLetterOfUnit.index);
+        if (this.isMultipleFractions(initNum)) return false;
+        initNum = eval(initNum);
+        if (isNaN(initNum)) return false;
+        return initNum;
     }
 
     this.getInitUnit = (input) => {
         let firstLetterOfUnit = this.getFirstLetterOfUnit(input);
-        return input.slice(firstLetterOfUnit.index);
-    }
-
-    this.isUnit = (unit) => {
-        let regex = new RegExp(unit, 'i');
-        for (let i = 0; i < listUnit.length; i++) {
-            if (regex.test(listUnit[i])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    this.checkMultipleFractions = (initInput) => {
-        return /\/\//g.test(initInput);
-    }
-
-    this.renameUnit = (unit) => {
-        return unit.toLowerCase() == 'l' ? 'L' : unit.toLowerCase();
+        if (firstLetterOfUnit == false) return false;
+        let initUnit = input.slice(firstLetterOfUnit.index);
+        if (!this.isUnit(initUnit)) return false;
+        initUnit = this.renameUnit(initUnit);
+        return initUnit;
     }
 
     this.getReturnNum = (initNum, initUnit) => {
@@ -52,6 +40,11 @@ function ConvertHandler() {
         return initNum + ' ' + this.transferUnitToName(initUnit) + ' converts to ' + this.getReturnNum(initNum, initUnit) + ' ' + this.transferUnitToName(this.getReturnUnit(initNum, initUnit))
     }
 
+    this.getFirstLetterOfUnit = (input) => {
+        let regex = /[^\d.\W]/;
+        return input.match(regex) == null ? false : input.match(regex);
+    }
+
     this.convert = (initNum, initUnit) => {
         for (let i = 0; i < listConvert.length; i++) {
             if (listConvert[i].indexOf(initUnit) != -1) {
@@ -59,6 +52,24 @@ function ConvertHandler() {
                 if (listConvert[i].indexOf(initUnit) == 1) return [initNum / listConvert[i][2], listConvert[i][0]];
             }
         }
+    }
+
+    this.isUnit = (unit) => {
+        let regex = new RegExp(unit, 'i');
+        for (let i = 0; i < listUnit.length; i++) {
+            if (regex.test(listUnit[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.isMultipleFractions = (initInput) => {
+        return /\/\//g.test(initInput);
+    }
+
+    this.renameUnit = (unit) => {
+        return unit.toLowerCase() == 'l' ? 'L' : unit.toLowerCase();
     }
 
     this.transferUnitToName = (unit) => {
