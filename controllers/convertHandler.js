@@ -9,14 +9,9 @@ function ConvertHandler() {
 
     this.getInitNum = (input) => {
         let firstLetterOfUnit = this.getFirstLetterOfUnit(input);
-        if (firstLetterOfUnit == false) {
-            if (isNaN(input)) return false;
-        }
+        if (firstLetterOfUnit == false) return this.isNum(input);
         initNum = input.slice(0, firstLetterOfUnit.index) == '' ? 1 : input.slice(0, firstLetterOfUnit.index);
-        if (this.isMultipleFractions(initNum)) return false;
-        initNum = eval(initNum);
-        if (isNaN(initNum)) return false;
-        return initNum;
+        return this.isNum(initNum);
     }
 
     this.getInitUnit = (input) => {
@@ -40,16 +35,16 @@ function ConvertHandler() {
         return initNum + ' ' + this.transferUnitToName(initUnit) + ' converts to ' + this.getReturnNum(initNum, initUnit) + ' ' + this.transferUnitToName(this.getReturnUnit(initNum, initUnit))
     }
 
-    this.getFirstLetterOfUnit = (input) => {
-        let regex = /[^\d.\W]/;
-        return input.match(regex) == null ? false : input.match(regex);
-    }
-
     this.convert = (initNum, initUnit) => {
         for (let i = 0; i < listConvert.length; i++) {
             if (listConvert[i].indexOf(initUnit) == 0) return [initNum * listConvert[i][2], listConvert[i][1]];
             if (listConvert[i].indexOf(initUnit) == 1) return [initNum / listConvert[i][2], listConvert[i][0]];
         }
+    }
+
+    this.getFirstLetterOfUnit = (input) => {
+        let regex = /[^\d.\W]/;
+        return input.match(regex) == null ? false : input.match(regex);
     }
 
     this.isUnit = (unit) => {
@@ -62,8 +57,15 @@ function ConvertHandler() {
         return false;
     }
 
+    this.isNum = (num) => {
+        if (this.isMultipleFractions(num)) return false;
+        num = eval(num);
+        if (isNaN(num)) return false;
+        return num;
+    }
+
     this.isMultipleFractions = (initInput) => {
-        return /\/\//g.test(initInput);
+        return /\/[\w|.]*\//g.test(initInput);
     }
 
     this.renameUnit = (unit) => {
