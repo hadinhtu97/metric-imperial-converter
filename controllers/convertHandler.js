@@ -47,10 +47,8 @@ function ConvertHandler() {
 
     this.convert = (initNum, initUnit) => {
         for (let i = 0; i < listConvert.length; i++) {
-            if (listConvert[i].indexOf(initUnit) != -1) {
-                if (listConvert[i].indexOf(initUnit) == 0) return [initNum * listConvert[i][2], listConvert[i][1]];
-                if (listConvert[i].indexOf(initUnit) == 1) return [initNum / listConvert[i][2], listConvert[i][0]];
-            }
+            if (listConvert[i].indexOf(initUnit) == 0) return [initNum * listConvert[i][2], listConvert[i][1]];
+            if (listConvert[i].indexOf(initUnit) == 1) return [initNum / listConvert[i][2], listConvert[i][0]];
         }
     }
 
