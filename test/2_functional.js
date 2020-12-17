@@ -2,7 +2,6 @@
 const chaiHttp = require('chai-http');
 const chai = require('chai');
 let assert = chai.assert;
-            done();
 const server = 'http://localhost:3000';
 chai.use(chaiHttp);
 
