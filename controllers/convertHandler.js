@@ -55,9 +55,9 @@ function ConvertHandler() {
     }
 
     this.isUnit = (unit) => {
-        let regex = new RegExp(unit, 'i');
+        let checkUnit = this.renameUnit(unit);
         for (let i = 0; i < listUnit.length; i++) {
-            if (regex.test(listUnit[i])) {
+            if (checkUnit == listUnit[i]) {
                 return true;
             }
         }
