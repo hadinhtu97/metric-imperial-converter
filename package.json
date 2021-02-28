@@ -1,7 +1,7 @@
 {
   "name": "metric-imperial-converter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend APIs convert between units of measure",
   "main": "server.js",
   "scripts": {
     "test": "mocha",
@@ -12,7 +12,6 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cors": "^2.8.0",
-    "dotenv": "^8.2.0",
     "express": "^4.12.4",
     "mocha": "^8.2.1"
   },
